@@ -1,0 +1,12 @@
+VARS ALL_NODES Njobs="1"
+JOB gen1 condor.sub
+VARS gen1 Task="generate" Job="0" GPU="0" MEM="1000"
+JOB prop1 condor.sub
+VARS gen1 Task="hits" Job="0" GPU="1" MEM="3500"
+PARENT gen1 CHILD prop1
+JOB det1 condor.sub
+VARS gen1 Task="detector" Job="0" GPU="0" MEM="2500"
+PARENT prop1 CHILD det1
+JOB filt1 condor.sub
+VARS gen1 Task="filtering" Job="0" GPU="0" MEM="3000"
+PARENT det1 CHILD prop1

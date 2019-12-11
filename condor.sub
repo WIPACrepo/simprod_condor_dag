@@ -1,0 +1,8 @@
+executable = env.sh
+arguments = --task $(Task) --job $(Job) --jobs_submitted $(Njobs)
+
+request_memory = $(MEM)
+request_gpus = $(GPU)
+request_disk = 10000000
+
+queue
