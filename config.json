@@ -33,7 +33,7 @@
                 "HistogramFilename":"histo.pkl",
                 "CutoffType":"EnergyPerNucleon",
                 "UsePipe":true,
-                "outputfile":"corsika.i3.zst",
+                "outputfile":"corsika.$(job).i3.zst",
                 "eprimarymax":"$steering(CORSIKA::eprimarymax)",
                 "oversampling":0,
                 "procnum":"$(job)",
@@ -66,21 +66,6 @@
               "running_class":"icecube.simprod.modules.Corsika5ComponentGenerator",
               "parameters":{},
               "data":[
-                {
-                  "remote":"",
-                  "local":"corsika.i3.zst",
-                  "type":"job_temp",
-                  "compression":false,
-                  "movement":"output"
-                },
-                {
-                  "remote":"$steering(TARGET::2016)/histos/corsika_5comp_$(job).pkl",
-                  "compression":false,
-                  "transfer":"exists",
-                  "type":"permanent",
-                  "local":"histo.pkl",
-                  "movement":"output"
-                }
               ],
               "resources":[]
             }
@@ -124,7 +109,7 @@
                 "outputfile":"signalhits.i3.zst",
                 "IceModel":"$steering(IceModel)",
                 "inputfilelist":[
-                  "corsika.i3.zst"
+                  "corsika.$(job).i3.zst"
                 ],
                 "IceModelLocation":"$steering(IceSimPath)/ice-models/resources/models/",
                 "runmphitfilter":true,
@@ -145,13 +130,6 @@
               "running_class":"icecube.simprod.modules.ClSimResampleCorsika",
               "parameters":{},
               "data":[
-                {
-                  "remote":"",
-                  "local":"corsika.i3.zst",
-                  "type":"job_temp",
-                  "compression":false,
-                  "movement":"input"
-                }
               ],
               "resources":[]
             },
@@ -160,7 +138,7 @@
               "name":"polyplopia",
               "env_clear":true,
               "args":{
-                "outputfile":"hits.i3.zst",
+                "outputfile":"hits.$(job).i3.zst",
                 "IceModel":"$steering(IceModel)",
                 "oversize":5,
                 "IceModelLocation":"$steering(IceSimPath)/ice-models/resources/models/",
@@ -181,13 +159,6 @@
               "running_class":"icecube.simprod.modules.PolyplopiaModule",
               "parameters":{},
               "data":[
-                {
-                  "remote":"",
-                  "local":"hits.i3.zst",
-                  "type":"job_temp",
-                  "compression":false,
-                  "movement":"output"
-                }
               ],
               "resources":[]
             }
@@ -224,7 +195,7 @@
               "name":"",
               "env_clear":true,
               "args":{
-                "outputfile":"$steering(outfile).i3.zst",
+                "outputfile":"det.$(job).i3.zst",
                 "ProcNum":"$(job)",
                 "MCType":"$steering(mctype)",
                 "UseLinearTree":true,
@@ -240,7 +211,7 @@
                 ],
                 "NProc":"$(jobs_submitted)",
                 "gcdfile":"$(gcdfile)",
-                "inputfile":"hits.i3.zst",
+                "inputfile":"hits.$(job).i3.zst",
                 "seed":"$steering(seed)",
                 "RunID":"$steering(CORSIKA::run)"
               },
@@ -250,28 +221,6 @@
               "running_class":"icecube.simprod.modules.IC86",
               "parameters":{},
               "data":[
-                {
-                  "remote":"",
-                  "local":"hits.i3.zst",
-                  "type":"job_temp",
-                  "compression":false,
-                  "movement":"input"
-                },
-                {
-                  "remote":"",
-                  "local":"$steering(outfile).i3.zst",
-                  "type":"job_temp",
-                  "compression":false,
-                  "movement":"output"
-                },
-                {
-                  "remote":"$steering(TARGET::2016)/histos/detector_$(job).pkl",
-                  "compression":false,
-                  "transfer":"exists",
-                  "type":"permanent",
-                  "local":"histo.pkl",
-                  "movement":"output"
-                }
               ],
               "resources":[]
             }
@@ -308,7 +257,7 @@
               "name":"",
               "env_clear":true,
               "args":{
-                "input":"$steering(outfile).i3.zst",
+                "input":"det.$(job).i3.zst",
                 "photonicsdir":"/cvmfs/icecube.opensciencegrid.org/data/photon-tables",
                 "output":"$steering(FILTER::infile)",
                 "gcd":"$(gcdfilel2)",
@@ -320,13 +269,6 @@
               "running_class":"",
               "parameters":{},
               "data":[
-                {
-                  "remote":"",
-                  "local":"$steering(outfile).i3.zst",
-                  "type":"job_temp",
-                  "compression":false,
-                  "movement":"input"
-                }
               ],
               "resources":[]
             }
@@ -350,7 +292,7 @@
                 "photonicsdir":"/cvmfs/icecube.opensciencegrid.org/data/photon-tables",
                 "simulation":null,
                 "gcd":"$(gcdfilel2)",
-                "output":"$steering(FILTER::outfile)"
+                "output":"Level2.$(job).i3.zst"
               },
               "env_shell":"/cvmfs/icecube.opensciencegrid.org/py2-v3.0.1/icetray-env icerec/V05-02-00",
               "projects":[],
@@ -358,13 +300,6 @@
               "running_class":"",
               "parameters":{},
               "data":[
-                {
-                  "remote":"$steering(TARGET::2016_L2)/$steering(FILTER::outfile)",
-                  "local":"$steering(FILTER::outfile)",
-                  "type":"permanent",
-                  "compression":false,
-                  "movement":"output"
-                }
               ],
               "resources":[]
             }
