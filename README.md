@@ -8,8 +8,6 @@ condor_submit_dag dag.sub
 
 ## Expected run stats
 
-File sizes:
-
 | Task      | Walltime | Output Size |
 | --------- | -------- | ----------- |
 | generate  | 44:31    | 3.6 MB      |
